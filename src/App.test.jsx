@@ -27,6 +27,8 @@ const ACTIVE_GAME = {
   scope: "nacional",
   status: "active",
   attempts: 0,
+  municipality_name: "São Paulo",
+  state_sigla: "SP",
 };
 
 const COMPLETED_GAME = {
@@ -80,16 +82,18 @@ describe("App", () => {
     expect(screen.getByRole("button", { name: /Sortear cidade/ })).toBeEnabled();
   });
 
-  it("inicia uma partida e mantém a cidade em segredo", async () => {
+  it("inicia uma partida e revela cidade e estado, mas mantém a população em segredo", async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.click(screen.getByRole("button", { name: /Sortear cidade/ }));
     await waitFor(() => expect(mockedApi.createGame).toHaveBeenCalledWith("nacional", undefined));
 
-    expect(screen.getByText("CIDADE MISTERIOSA")).toBeInTheDocument();
-    expect(screen.getByText("A população fica em segredo até você acertar ou desistir.")).toBeInTheDocument();
-    expect(screen.queryByText("São Paulo")).not.toBeInTheDocument();
+    expect(screen.getByText("CIDADE SORTEADA")).toBeInTheDocument();
+    expect(screen.getByText("São Paulo")).toBeInTheDocument();
+    expect(screen.getByText("SP")).toBeInTheDocument();
+    expect(screen.getByText("A população continua em segredo. Qual é o seu palpite?")).toBeInTheDocument();
+    expect(screen.queryByText("123.456")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Enviar palpite" })).toBeDisabled();
   });
 

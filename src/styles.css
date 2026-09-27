@@ -281,12 +281,10 @@ h1 {
 }
 .tolerance-value { margin-top: 17px; color: var(--green-dark); font-size: 54px; font-weight: 600; line-height: 1; }
 .tolerance-value span { margin-left: 3px; color: #839276; font-size: 26px; }
-.tolerance-rule { margin-top: 9px; display: flex; align-items: center; gap: 7px; color: #777e71; font-size: 10px; }
-.tolerance-rule span { width: 15px; height: 1px; background: #aab29d; }
 .tolerance-scale { height: 20px; position: relative; margin-top: 17px; display: flex; align-items: center; justify-content: space-between; }
 .tolerance-scale::before { position: absolute; left: 0; right: 0; height: 2px; background: #d0d5c4; content: ""; }
 .tolerance-scale i { z-index: 1; width: 4px; height: 11px; background: #bcc4b0; }
-.tolerance-scale i:nth-child(5) { height: 20px; width: 3px; background: var(--green); }
+.tolerance-scale i:nth-child(6) { height: 20px; width: 3px; background: var(--green); }
 .tolerance-scale b { position: absolute; z-index: 2; left: calc(50% - 14px); width: 28px; height: 8px; background: var(--yellow); }
 .scale-labels { display: flex; justify-content: space-between; color: #858b7d; font-size: 8px; }
 .scale-labels span:nth-child(2) { color: var(--green); }
@@ -334,6 +332,7 @@ h1 {
 .mystery-caption { z-index: 1; color: #68806e; font-size: 8px; letter-spacing: 1px; }
 .mystery-city h2 { z-index: 1; margin: 5px 10px 0; font-size: 22px; font-weight: 600; }
 .mystery-city p { z-index: 1; margin: 5px 12px 0; color: #737d71; font-size: 11px; }
+.mystery-city .mystery-state { margin-top: 2px; color: var(--green-dark); font: 600 11px var(--mono); letter-spacing: 1px; }
 .guess-form { max-width: 490px; margin: 0 auto; }
 .guess-entry { height: 54px; position: relative; display: flex; align-items: center; margin-top: 8px; border: 1px solid #cbcfc4; background: white; }
 .guess-entry:focus-within { border-color: #71917c; box-shadow: 0 0 0 2px #e0e9df; }
@@ -430,7 +429,6 @@ h1 {
   .game-aside { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
   .aside-card { min-width: 0; padding: 14px; }
   .tolerance-value { font-size: 42px; }
-  .tolerance-rule { font-size: 8px; }
   .source-card .ibge-lockup { gap: 7px; font-size: 21px; }
   .ibge-symbol { width: 32px; height: 32px; }
   .aside-footnote { display: none; }
@@ -441,6 +439,7 @@ h1 {
   .question-panel { padding: 18px 14px 14px; }
   .mystery-city { min-height: 190px; }
   .mystery-city h2 { max-width: 300px; font-size: 19px; }
+  .mystery-city .mystery-state { font-size: 10px; }
   .mystery-city p { max-width: 260px; font-size: 10px; line-height: 1.5; }
   .guess-entry input { padding-right: 95px; font-size: 17px; }
   .input-suffix { right: 55px; font-size: 8px; }

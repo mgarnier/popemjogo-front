@@ -293,13 +293,14 @@ function App() {
                     <div className="step-label"><span>02</span> SEU PALPITE</div>
                     <span className="live-label"><span className="live-dot" /> RODADA EM CURSO</span>
                   </div>
-                  <div className="mystery-city">
+                    <div className="mystery-city">
                     <div className="mystery-orbit orbit-one" />
                     <div className="mystery-orbit orbit-two" />
                     <div className="mystery-pin"><MapPinned size={28} strokeWidth={1.55} /></div>
-                    <span className="mystery-caption">CIDADE MISTERIOSA</span>
-                    <h2>Uma cidade de {scopeLabel || "algum lugar do Brasil"}</h2>
-                    <p>A população fica em segredo até você acertar ou desistir.</p>
+                    <span className="mystery-caption">CIDADE SORTEADA</span>
+                    <h2>{game.municipality_name}</h2>
+                    <p className="mystery-state">{game.state_sigla}</p>
+                    <p>A população continua em segredo. Qual é o seu palpite?</p>
                   </div>
                   <form className="guess-form" onSubmit={submitGuess}>
                     <label className="field-label" htmlFor="population-guess">POPULAÇÃO ESTIMADA</label>
@@ -370,8 +371,7 @@ function App() {
               <div className="aside-card tolerance-card">
                 <div className="aside-kicker">MARGEM DE ACERTO <CircleHelp size={14} /></div>
                 <div className="tolerance-value">±5<span>%</span></div>
-                <div className="tolerance-rule"><span /> intervalo aceito pelo IBGE <span /></div>
-                <div className="tolerance-scale"><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><b /></div>
+                <div className="tolerance-scale" aria-label="Margem de tolerância de cinco por cento abaixo e acima da população real"><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><b /></div>
                 <div className="scale-labels"><span>MENOR</span><span>POPULAÇÃO REAL</span><span>MAIOR</span></div>
               </div>
               <div className="aside-card source-card">
