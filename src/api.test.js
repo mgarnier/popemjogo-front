@@ -40,7 +40,7 @@ describe("apiRequest", () => {
     await expect(apiRequest("/api/v1/test")).resolves.toEqual({ ok: true });
 
     expect(fetchMock).toHaveBeenCalledWith(
-      "http://localhost:8000/api/v1/test",
+      "/api/v1/test",
       expect.objectContaining({
         headers: {
           "Content-Type": "application/json",
@@ -80,13 +80,13 @@ describe("api", () => {
     await api.clearHistory();
 
     expect(fetchMock.mock.calls.map(([url, options]) => [url, options?.method])).toEqual([
-      ["http://localhost:8000/api/v1/geografia/regioes", undefined],
-      ["http://localhost:8000/api/v1/geografia/estados?region_id=10", undefined],
-      ["http://localhost:8000/api/v1/partidas", "POST"],
-      ["http://localhost:8000/api/v1/partidas/game%2Fid/palpites", "PUT"],
-      ["http://localhost:8000/api/v1/partidas/game%2Fid/desistencia", "PUT"],
-      ["http://localhost:8000/api/v1/historico", undefined],
-      ["http://localhost:8000/api/v1/historico", "DELETE"],
+      ["/api/v1/geografia/regioes", undefined],
+      ["/api/v1/geografia/estados?region_id=10", undefined],
+      ["/api/v1/partidas", "POST"],
+      ["/api/v1/partidas/game%2Fid/palpites", "PUT"],
+      ["/api/v1/partidas/game%2Fid/desistencia", "PUT"],
+      ["/api/v1/historico", undefined],
+      ["/api/v1/historico", "DELETE"],
     ]);
     expect(fetchMock.mock.calls[2][1].body).toBe(JSON.stringify({ scope: "estado", scope_id: 33 }));
     expect(fetchMock.mock.calls[3][1].body).toBe(JSON.stringify({ guess: 125000 }));

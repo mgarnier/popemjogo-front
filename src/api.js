@@ -1,5 +1,5 @@
 const PLAYER_ID_KEY = "populacao-em-jogo.player-id";
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/$/, "");
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 
 function createPlayerId() {
   if (globalThis.crypto?.randomUUID) {

@@ -1,0 +1,48 @@
+services:
+  backend:
+    build:
+      context: ../mvp-back
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_PATH: /app/data/populacao_em_jogo.sqlite3
+      FRONTEND_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+    ports:
+      - "8000:8000"
+    volumes:
+      - sqlite_data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health')"]
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+
+  backend-test:
+    build:
+      context: ../mvp-back
+      dockerfile: Dockerfile
+    profiles: ["test"]
+    environment:
+      DATABASE_PATH: /tmp/populacao_em_jogo_tests.sqlite3
+    command: ["python", "-m", "unittest", "discover", "-s", "tests", "-v"]
+
+  frontend-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    profiles: ["test"]
+    command: ["npm", "test"]
+
+volumes:
+  sqlite_data:

@@ -2,8 +2,8 @@ $ErrorActionPreference = "Stop"
 
 Set-Location $PSScriptRoot
 
-if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-    throw "npm não foi encontrado no PATH. Instale o Node.js antes de testar o frontend."
+if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
+    throw "docker não foi encontrado no PATH. Instale o Docker Desktop antes de testar o frontend."
 }
 
-npm test
+docker compose --profile test run --rm frontend-test
