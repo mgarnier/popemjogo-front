@@ -11,7 +11,7 @@ flowchart LR
     Browser[Navegador] --> Nginx[Frontend Nginx]
     Nginx -->|Arquivos estáticos| Browser
     Nginx -->|/api/*| FastAPI[Backend FastAPI]
-    FastAPI --> SQLite[(SQLite em volume)]
+    FastAPI --> SQLite[(SQLite)]
     FastAPI --> IBGE[API pública do IBGE]
 ```
 
@@ -23,10 +23,10 @@ O projeto possui três módulos comunicantes:
 
 ## Tecnologias
 
-- React 19
-- Vite 8
-- Lucide React
-- Vitest, Testing Library e jsdom
+- React 19 para construir a interface.
+- Vite 8 para desenvolvimento e build.
+- Lucide React para os ícones.
+- Vitest, Testing Library e jsdom para testar a interface.
 - Nginx para servir o build de produção
 - Docker Compose para a execução integrada
 
@@ -66,11 +66,11 @@ Os scripts PowerShell da raiz usam Docker Compose:
 
 Eles constroem a imagem, iniciam os serviços integrados e executam os testes no profile `test`.
 
-Para executar a API localmente, use os scripts equivalentes em `../mvp-back`.
+Para executar a API localmente, use os scripts equivalentes no repositório <https://github.com/mgarnier/popemjogo-api>.
 
 ## Execução com Docker Compose
 
-O Compose está neste repositório e usa o backend clonado lado a lado em `../mvp-back`:
+O Compose está neste repositório e usa o backend clonado lado a lado a partir de <https://github.com/mgarnier/popemjogo-api>:
 
 ```powershell
 docker compose config
@@ -135,8 +135,6 @@ Os testes do frontend são determinísticos e não chamam a API real:
 
 A suíte cobre o cliente HTTP, UUID, headers, métodos, erros, seleção de escopo, partida, feedback, vitória, desistência, histórico e confirmação de limpeza.
 
-Última validação local: 15 testes passaram. A execução dentro do Docker Compose depende do Docker Desktop disponível no ambiente.
-
 ## Limitações
 
 - O UUID do navegador identifica anonimamente o jogador, mas não é autenticação.
@@ -147,4 +145,4 @@ A suíte cobre o cliente HTTP, UUID, headers, métodos, erros, seleção de esco
 
 ## Repositório relacionado
 
-O backend está em `../mvp-back` e possui seu próprio README, Dockerfile e scripts auxiliares.
+O backend está em <https://github.com/mgarnier/popemjogo-api> e possui seu próprio README, Dockerfile e scripts auxiliares.
