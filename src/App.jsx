@@ -175,11 +175,6 @@ function App() {
 
   const activeGame = game?.status === "active";
   const completedGame = game && game.status !== "active";
-  const scopeLabel = scope === "nacional"
-    ? "Brasil"
-    : scope === "regiao"
-      ? regions.find((region) => String(region.id) === String(scopeId))?.nome
-      : states.find((state) => String(state.id) === String(scopeId))?.nome;
 
   return (
     <div className="app-shell">
