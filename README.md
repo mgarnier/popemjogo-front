@@ -32,12 +32,49 @@ O projeto possui três módulos comunicantes:
 
 ## Pré-requisitos
 
-Para usar os scripts auxiliares e a execução integrada, instale Docker Desktop com Docker Compose disponível:
+Para usar os scripts auxiliares e a execução integrada, instale o [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/) e inicie-o em modo de containers Linux. No Windows, use o backend WSL 2; se ele não estiver disponível, habilite a virtualização na BIOS/UEFI, execute `wsl --install` no PowerShell como administrador e reinicie o computador. Se o WSL já estiver instalado mas desatualizado, execute `wsl --update` ([instruções oficiais](https://learn.microsoft.com/windows/wsl/install)). Confirme que o daemon responde antes de executar o Compose:
 
 ```powershell
 docker version
 docker compose version
+docker info --format '{{.OSType}}'
 ```
+
+O último comando deve retornar `linux`. Se `docker version` mostrar somente o cliente e falhar ao acessar o servidor, inicie o Docker Desktop. As portas 8000 e 8080 devem estar livres. Python e Node.js não precisam estar instalados no host para a execução em containers; as imagens incluem as versões necessárias.
+
+## Clonagem dos repositórios
+
+Instale o Git e, em uma pasta que conterá os dois projetos, clone os repositórios públicos com os nomes locais indicados:
+
+```powershell
+git clone https://github.com/mgarnier/popemjogo-front mvp-front
+git clone https://github.com/mgarnier/popemjogo-api mvp-back
+```
+
+A estrutura local deve ficar assim:
+
+```text
+<pasta-pai>/
+    mvp-front/
+    mvp-back/
+```
+
+Os diretórios `mvp-front` e `mvp-back` precisam estar no mesmo nível: o Docker Compose e os scripts da API usam esses caminhos para encontrar o outro módulo. Se já tiver clonado os projetos, confira os nomes e a posição das pastas antes de executar os scripts.
+
+## Execução com scripts (recomendada)
+
+No PowerShell, a partir da raiz do frontend:
+
+```powershell
+.\build.ps1
+.\run.ps1
+.\test.ps1
+```
+
+`build.ps1` constrói apenas a imagem do frontend; é opcional antes de `run.ps1`, que constrói e inicia frontend e backend em segundo plano e aguarda os serviços ficarem prontos. `test.ps1` reconstrói a imagem de testes do frontend e executa apenas seus testes, retornando erro se falharem. Para testar o backend, use o script de testes no repositório da API. O terminal fica livre após `run.ps1`.
+
+- Interface: <http://localhost:8080>
+- Swagger da API: <http://localhost:8000/docs>
 
 ## Execução local sem Docker
 
@@ -56,26 +93,16 @@ npm run dev
 
 Durante o desenvolvimento, o proxy do Vite encaminha `/api` para `http://localhost:8000`.
 
-Os scripts PowerShell da raiz usam Docker Compose:
-
-```powershell
-.\build.ps1
-.\run.ps1
-.\test.ps1
-```
-
-Eles constroem a imagem, iniciam os serviços integrados e executam os testes no profile `test`.
-
 Para executar a API localmente, use os scripts equivalentes no repositório <https://github.com/mgarnier/popemjogo-api>.
 
 ## Execução com Docker Compose
 
-O Compose está neste repositório e usa o backend clonado lado a lado a partir de <https://github.com/mgarnier/popemjogo-api>:
+Como alternativa aos scripts, o Compose está neste repositório e usa o backend clonado lado a lado a partir de <https://github.com/mgarnier/popemjogo-api>:
 
 ```powershell
 docker compose config
 docker compose build
-docker compose up -d
+docker compose up -d --build --wait frontend backend
 docker compose ps
 ```
 
@@ -89,8 +116,8 @@ Endereços publicados:
 Para executar os testes nos containers:
 
 ```powershell
-docker compose --profile test run --rm backend-test
-docker compose --profile test run --rm frontend-test
+docker compose --profile test run --build --rm backend-test
+docker compose --profile test run --build --rm frontend-test
 ```
 
 Para acompanhar os logs:
